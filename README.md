@@ -234,7 +234,7 @@ python scripts/create_delivery_package.py "edited.docx" --output-dir "output/doc
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=mikemikeqqq/copyeditor-skill&type=Date)](https://star-history.com/#mikemikeqqq/copyeditor-skill&Date)
+[查看 Star History 图表](https://star-history.com/#mikemikeqqq/copyeditor-skill&Date)
 
 ## License
 
