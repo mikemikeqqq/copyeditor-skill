@@ -1,4 +1,12 @@
 interface:
-  display_name: "Copyeditor Skill"
-  short_description: "Copy-edit academic DOCX with tracked-change QA"
-  default_prompt: "Use $copyeditor-skill to copy-edit this academic manuscript with Word tracked changes, audit citations/references and numbers, sort author-date citation clusters by year when safe, preserve existing comments, append a copy editing report, and validate the final DOCX."
+  display_name: Journal Copyeditor DOCX
+  short_description: Comprehensive tracked-change copyediting and manuscript review for academic DOCX files, with journal-neutral or configurable target-journal standards.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

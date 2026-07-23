@@ -1,145 +1,285 @@
 ---
-name: copyeditor-skill
-description: Professional academic copyediting skill for .docx manuscripts. Use when the user asks Codex to proofread, line-edit, polish, revise, copy edit, or prepare an academic manuscript in Microsoft Word with tracked changes, Catherine-style editor comments, formal critical academic English, construct consistency, methodological caution, minimal local tracked edits instead of whole-paragraph replacement, citation-year ordering, citation/reference audits, statistics/number consistency checks, journal style profiles, reviewer-risk audit, clean/tracked/PDF delivery packages, an appended copy editing and proofreading report, preservation of existing comments/revisions/citations/fields/fonts/formatting, native English style, journal or discipline conventions, Chinese-influenced English cleanup, and validation against DOCX corruption, mojibake, unexpected CJK characters, missing Catherine comments, formatting drift, or excessive paragraph-level revision blocks. Also use for Chinese requests such as 论文润色, 英文学术校对, copy editing, 修订模式, 批注, 投稿前语言编辑, and 非英语母语作者英文论文修改.
+name: journal-copyeditor-docx
+description: Comprehensive academic journal copyediting and manuscript review for Microsoft Word (.docx) files across disciplines and target journals. Use when the user asks to proofread, line-edit, polish, revise, redline, or prepare a manuscript with tracked changes, editor comments, a clean accepted copy, PDF review copy, and a structured editorial report. The skill preserves existing formatting, revisions, comments, citation fields, equations, tables, figures, footnotes, and document structure while auditing language, argument logic, construct terminology, methods, statistical reporting, citation-reference correspondence, causal claims, reviewer risks, and document integrity. It supports target-journal profiles when supplied but does not assume any specific journal.
 ---
 
-# Copyeditor Skill
+# Journal Copyeditor DOCX
 
-Use this skill when the deliverable is a copy-edited academic `.docx`, normally with Microsoft Word tracked changes and concise editor comments.
+Conduct publication-oriented copyediting and consistency review of academic manuscripts in `.docx` format. Apply the core `docx` skill for document editing, tracked changes, comments, rendering, and integrity verification.
 
-## Operating Contract
+## Default Scope
 
-- Preserve the source DOCX. Always create a new output file, preferably in `output/doc/` or beside the source with a clear suffix.
-- Default to `Catherine` / `C` as the Word reviewer identity unless the user supplies another name. Restore the previous Word user name and initials afterward.
-- Use Microsoft Word automation for tracked changes when Word COM is available. Avoid direct OOXML edits for final tracked-change deliverables unless the user explicitly accepts the risk.
-- Keep Track Changes enabled for edits. Preserve existing revisions and comments unless the user explicitly asks to accept, reject, remove, or resolve them.
-- Treat author-provided text as the factual source. Improve language, structure, and hedging, but never invent data, methods, citations, mechanisms, limitations, p-values, sample sizes, figure panels, or reference metadata.
-- Preserve technical meaning, hypotheses, model names, sample sizes, coefficients, p-values, statistical notation, equations, citations, field codes, tables, figures, reference entries, and proper names.
-- Use formal academic English with clear, common vocabulary. Be direct, critical, and professional. Pair criticism with concrete revision solutions.
-- Maintain strict construct consistency. Do not introduce unmeasured constructs or replace the author's constructs with broader, narrower, or trendier terms unless explicitly requested.
-- Treat correlations, regression coefficients, meta-analytic estimates, structural paths, and moderation results as associations unless the research design justifies causal inference.
-- Preserve formatting. Edited or inserted tracked-change text must inherit the surrounding font, size, style, spacing, paragraph style, table/caption/reference formatting, and superscript/subscript behavior unless the user explicitly requests formatting changes.
-- Use minimal local tracked changes. Replace only the word, phrase, punctuation, clause, or sentence part that needs editing. Do not delete and reinsert whole paragraphs for ordinary copyediting.
-- Sort multiple author-date citations within the same citation cluster by publication year ascending unless the target journal explicitly requires another order. Preserve citation-manager fields; if safe reordering is not possible, add a report item or editor comment instead of breaking fields.
-- Add comments only for author decisions that copyediting cannot safely settle: unclear meaning, theory or interpretation changes, inconsistent terminology, duplicated examples, missing evidence, unsupported claims, or possible citation/statistical issues.
-- Append a `Copy Editing and Proofreading Report` section inside the edited Word document unless the user explicitly asks for a separate report. The report should identify language issues, citation/reference problems, and reviewer-risk points that need author attention.
-- Do not use Word Compare as the default path for final tracked changes when the manuscript contains many symbols, accented names, equations, or non-ASCII characters.
+For a request described as **comprehensive**, **submission-ready**, or **journal copyediting**, perform all of the following unless the user narrows the task:
 
-## When to Open Extra Files
+1. Language and readability editing.
+2. Theory, argument, and claim-boundary review.
+3. Construct and terminology consistency review.
+4. Methodological and statistical reporting audit.
+5. Citation and reference correspondence audit.
+6. Target-journal or journal-neutral submission-suitability review.
+7. DOCX structure, formatting, field, revision, and rendering validation.
 
-| File | Open when |
-|---|---|
-| [references/copyediting-contract.md](references/copyediting-contract.md) | Choosing light, medium, or heavy copyediting; deciding what may be changed, commented, or left untouched |
-| [references/academic-critical-style.md](references/academic-critical-style.md) | Applying formal critical academic English, construct consistency, methodological caution, literature standards, and reviewer-response style |
-| [references/style-and-argument.md](references/style-and-argument.md) | Editing section logic, paragraph flow, claim-evidence-boundary, discipline voice, or Chinese-influenced English |
-| [references/minimal-diff-tracked-changes.md](references/minimal-diff-tracked-changes.md) | Avoiding whole-paragraph delete/reinsert revisions and keeping tracked changes reviewable |
-| [references/format-preservation.md](references/format-preservation.md) | Preserving fonts, run formatting, paragraph styles, table/reference/caption formatting, and checking formatting drift |
-| [references/citations-and-report.md](references/citations-and-report.md) | Sorting author-date citation clusters by year, checking reference consistency, and writing the final copy editing report |
-| [references/journal-styles.md](references/journal-styles.md) | Choosing APA/Harvard/Nature/Elsevier/IEEE/Vancouver conventions, English variety, and reference formatting assumptions |
-| [references/reviewer-risk-rubric.md](references/reviewer-risk-rubric.md) | Grading potential reviewer challenges as minor, moderate, or serious |
-| [references/statistics-and-numbers.md](references/statistics-and-numbers.md) | Checking p-values, CI, SD/SE, sample sizes, table/figure numbering, and significance language |
-| [references/chinese-influenced-english.md](references/chinese-influenced-english.md) | Diagnosing article errors, long translated sentences, unscopeed novelty, and Results/Discussion mixing in Chinese-influenced English |
-| [references/deliverable-packaging.md](references/deliverable-packaging.md) | Creating tracked, clean, PDF, report, and audit-output delivery packages |
-| [references/word-com-workflow.md](references/word-com-workflow.md) | Using Word COM safely for tracked changes, comments, PDF export, cleanup, or fallback decisions |
-| [references/validation-checklist.md](references/validation-checklist.md) | Running final QA, interpreting `validate_docx.py`, checking corruption, or deciding readiness |
+## Intake Profile
+
+Determine from the manuscript and request:
+
+- manuscript file and supplementary files;
+- target journal, discipline, and article type, if specified;
+- English variety and citation style, if specified;
+- editing intensity: light, medium, heavy, or comprehensive;
+- required reviewer name and initials;
+- required deliverables.
+
+If the target journal is not specified, use a **journal-neutral, high-quality academic profile** appropriate to the discipline. Do not infer or hard-code a particular journal. If a journal is specified and current author guidance is needed, verify only against the journal's official current instructions and state the profile used in the report.
+
+Default reviewer identity: `Copy Editor` / `CE`.
+
+## Non-Negotiable Editorial Contract
+
+- Preserve the source file. Work only on copies.
+- Preserve all existing tracked revisions and comments in the tracked deliverable.
+- Preserve citation-manager fields, cross-references, equations, hyperlinks, footnotes/endnotes, section breaks, tables, figures, captions, numbering, and styles.
+- Do not fabricate, infer, or repair empirical facts without evidence from the supplied manuscript or verified source files.
+- Do not invent theories, constructs, mechanisms, hypotheses, citations, sample details, analyses, coefficients, p-values, confidence intervals, or reference metadata.
+- Do not strengthen novelty, causality, generalizability, or managerial implications beyond what the design and evidence support.
+- Use the same term for the same construct. Do not rotate technical terms for stylistic variety.
+- Make the smallest safe tracked edit. Avoid paragraph-wide delete-and-reinsert revisions for ordinary copyediting.
+- Make substantive meaning changes only when clearly supported. Otherwise add a concise Word comment and report item.
+- Never silently reconcile conflicting values. Flag them and identify every affected location.
+- Do not update citation fields, reference-manager fields, numbering fields, or cross-references unless explicitly requested and verified.
+
+## Edit, Comment, or Report Decision Rule
+
+**Edit directly with tracked changes** when the correction is local, unambiguous, and meaning-preserving, including grammar, syntax, punctuation, concision, transition, terminology normalization, and defensible hedging.
+
+**Add a Word comment** when resolution requires author knowledge, new evidence, reanalysis, construct choice, theoretical repositioning, methodological justification, or interpretation of conflicting values.
+
+**Add a report item** when the issue is global, repeated, submission-level, or difficult to anchor at one location. Use both a comment and a report item for serious issues.
+
+Do not use comments for routine grammar edits.
+
+## Comprehensive Audit Domains
+
+### 1. Language and Readability
+
+- Correct grammar, punctuation, spelling, agreement, syntax, articles, prepositions, parallelism, and word choice.
+- Replace translationese and Chinese-influenced sentence structure with natural academic English.
+- Reduce redundancy, nominalization, vague pronouns, unnecessary passive voice, inflated wording, and AI-like filler.
+- Improve paragraph unity, topic sentences, transitions, and section flow.
+- Preserve technical nuance and the authors' intended meaning.
+
+Open `references/language-and-argument.md` for detailed rules.
+
+### 2. Theory and Argument Quality
+
+- Check that each section performs its proper function.
+- Trace the logic from research problem to gap, research question, theory, hypotheses, findings, contributions, implications, limitations, and conclusion.
+- Test whether each claim has a stated basis, logical bridge, boundary, and evidentiary support.
+- Flag unsupported novelty claims, missing comparators, circular logic, construct substitution, post hoc theorizing, and implications that exceed the findings.
+- Do not introduce a new theory, construct, mechanism, or citation unless clearly marked as an editorial recommendation.
+
+Open `references/theory-construct-review.md`.
+
+### 3. Construct and Terminology Consistency
+
+Create an internal construct dictionary covering:
+
+- canonical construct name and abbreviation;
+- conceptual definition and defining attributes;
+- conceptual domain, referent, unit, and level of analysis;
+- temporal status and dimensional structure;
+- role in the theoretical and empirical model;
+- operationalization, manipulation, proxy, or scale;
+- item labels, subdimensions, and scoring direction;
+- expected relationship with other variables;
+- neighboring constructs that require differentiation;
+- sections, tables, figures, and appendices where the construct appears.
+
+Apply a general construct-differentiation check rather than relying on fixed construct pairs. For every focal and neighboring construct, compare definition, conceptual domain, referent, level, temporal scope, dimensionality, nomological role, and operationalization. Verify that:
+
+- one construct is not given multiple labels without justification;
+- one label is not used for substantively different constructs;
+- distinct constructs have an explicit conceptual boundary rather than merely different names;
+- the measure or manipulation represents the stated construct rather than an adjacent attribute;
+- proxies, indicators, dimensions, mechanisms, outcomes, and manipulation checks are not presented as interchangeable;
+- construct meaning remains stable across theory, hypotheses, methods, results, discussion, tables, figures, and appendices.
+
+Flag duplicated or mismatched items, undeveloped or unmeasured constructs, silent changes in level or referent, and distinctions that require author judgment or additional validity evidence.
+
+### 4. Methods and Statistical Reporting
+
+Check across text, tables, figures, notes, appendices, and supplementary materials:
+
+- study numbering, sample sizes, exclusions, cell sizes, demographics, and conditions;
+- variable names, coding, reference categories, scale anchors, item wording, reliability, validity, and manipulation checks;
+- coefficients, standard errors, test statistics, degrees of freedom, p-values, confidence intervals, effect sizes, odds ratios, and directions;
+- model names, bootstrap samples, conditional effects, indirect-effect scale, covariates, robustness checks, and stated conclusions;
+- causal language, mediation language, and generalization relative to design.
+
+Do not alter a numerical result merely because it appears wrong. Flag it, report the locations, and request verification.
+
+Open `references/methods-statistics-review.md`.
+
+### 5. Citations and References
+
+- Match in-text citations to reference entries and identify uncited references.
+- Check names, years, suffixes, citation order, duplicate records, incomplete metadata, DOI/URL formatting, and inconsistent journal-title styling.
+- Preserve reference-manager fields. Do not convert fields to plain text unless explicitly requested.
+- Do not fabricate or replace references. When external verification is requested, use authoritative bibliographic sources and clearly distinguish verified corrections from editorial suspicions.
+
+Open `references/citation-reference-review.md`.
+
+### 6. Submission Suitability and Reviewer Risk
+
+If a target journal is supplied, assess fit using its verified profile. Otherwise assess against general standards for a strong peer-reviewed article in the discipline.
+
+Review for:
+
+- unclear marketing, management, social-science, or discipline-specific problem relevance;
+- incremental contribution or excessive overlap with adjacent research;
+- weak mechanism, missing boundary conditions, construct overlap, and overclaimed novelty;
+- identification weaknesses, manipulation confounds, common-method concerns, selective controls, or outcome-validity problems;
+- weak connection among abstract, introduction, results, discussion, and conclusion;
+- practical implications unsupported by the evidence;
+- missing ethics, consent, transparency, data availability, funding, conflict, or AI-use statements when applicable.
+
+Assign risk severity using `references/reviewer-risk-rubric.md`.
+
+### 7. Document Integrity
+
+Audit before and after editing:
+
+- existing revisions and comments;
+- field codes and hyperlinks;
+- equations and symbols;
+- tables, figures, captions, and image relationships;
+- footnotes/endnotes;
+- headings, numbering, page/section breaks, headers/footers, and styles;
+- unexpected CJK characters, mojibake, replacement glyphs, missing text, formatting drift, and corrupted package parts.
+
+Open `references/tracked-changes-integrity.md`.
 
 ## Workflow
 
-1. Intake the task:
-   - Identify the manuscript file, requested editor name, target journal or spelling style, and editing level. If unspecified, use medium journal copyediting in US English unless the manuscript or user indicates another convention.
-   - If the user supplied style samples, apply them only as a soft guide; discipline, journal norms, factual fidelity, and clarity take priority.
-2. Inspect the file:
-   - Confirm it opens.
-   - Count existing revisions and comments.
-   - Identify existing reviewer names.
-   - Record whether comments by `Catherine` already exist and must be preserved.
-   - Check whether Track Changes is already enabled.
-   - Run the validation script on the source when possible to establish a baseline.
-   - Run `scripts/audit_citations.py` and `scripts/audit_numbers.py` when the manuscript has citations, references, tables, figures, or statistics.
-3. Create a clean output copy.
-4. Copy-edit with Word COM:
-   - Turn on Track Changes.
-   - Work paragraph by paragraph, preserving citations, equations, fields, and reference data.
-   - Preserve source formatting at the run/paragraph level. Capture and reapply local font/style when Word does not inherit formatting automatically.
-   - Make edits at the smallest safe range. Do not replace an entire paragraph when only local language changes are needed.
-   - Sort multi-source author-date citation clusters by year ascending when it can be done without damaging citation fields.
-   - Check for citation/reference issues: missing citations, citations with no reference entry, reference entries not cited, inconsistent citation style, wrong order, incomplete metadata, and inconsistent reference formatting.
-   - Apply journal style assumptions explicitly. If the target style is uncertain, state the assumed profile in the report.
-   - Apply `references/academic-critical-style.md`: keep construct labels consistent, avoid unmeasured constructs, use cautious methodological language, and align theory, hypotheses, results, and implications.
-   - Apply the statistics/numbers pass for p-values, CI, sample sizes, figure/table numbering, and unsupported significance language.
-   - For Chinese-influenced English, repair translationese and add comments/report items when missing comparators, scope, evidence, or section logic remain unresolved.
-   - Prefer targeted sentence and paragraph edits over broad global rewrites.
-   - Use global find/replace only for low-risk, verified changes.
-5. Add editor comments and the report:
-   - Use concise, professional English in the requested editor voice.
-   - Comment on genuine author decisions, not every grammar edit.
-   - Append a `Copy Editing and Proofreading Report` section in the edited Word document summarizing proofreading issues, citation/reference problems, statistics/number issues, and reviewer-risk points.
-   - Use `scripts/insert_copyediting_report.py` when a report can be inserted safely via Word COM.
-6. Validate before delivery:
-   - Reopen the output with Word.
-   - Confirm revision count, comment count, and Track Changes status.
-   - Run `scripts/validate_docx.py` on the output, preferably with `--source --require-report --require-comment-author Catherine`.
-   - Run `scripts/audit_revision_granularity.py` on the output and redo any confirmed whole-paragraph replacement as local tracked edits.
-   - Run `scripts/audit_formatting.py` on the output and visually inspect any flagged inserted text.
-   - Export a PDF check copy when possible.
-   - Visually check several high-risk pages: title/abstract, equations/statistics, tables, references, and any pages with comments.
-   - If unexpected CJK, mojibake, missing comments, missing Catherine comments, missing report, lost revisions, corrupted symbols, whole-paragraph replacement patterns, or formatting drift appear, stop and fix before delivery.
-7. Report the deliverable:
-   - Provide the edited DOCX path, optional clean DOCX/PDF/audit outputs, validation summary, and a short note that the in-document report lists citation/reference, statistics/number, and reviewer-risk issues.
+### Phase 1: Baseline Inspection
 
-## Style Guidance
+1. Copy the source into a dedicated work directory.
+2. Confirm that the DOCX opens and is a valid ZIP package.
+3. Run `scripts/audit_docx.py` on the source.
+4. Run `scripts/audit_citations.py` and `scripts/audit_statistics.py` when relevant.
+5. Record source counts for paragraphs, tables, figures, fields, comments, revisions, sections, footnotes, and hyperlinks.
+6. Render the source and inspect representative high-risk pages before editing.
 
-- Language serves argument. Do not make a sentence elegant while leaving the reasoning unclear.
-- Edit in this priority order: factual fidelity, claim-evidence-boundary, section job, paragraph flow, sentence clarity, rhythm, word choice.
-- Prefer concise journal prose, but do not flatten disciplinary nuance or authorial intent.
-- Keep terminology consistent. Do not rotate synonyms for technical concepts merely for variety.
-- Hedge unsupported causal, mechanistic, novelty, or generalization claims. Flag major claim-evidence gaps in comments.
-- Remove AI-typical filler when encountered, such as `delve`, `pivotal`, `crucial`, `realm`, `landscape` when vague, `it is important to note`, and overused em dashes.
-- For Chinese-influenced English, translate intent rather than syntax: identify claim, evidence, condition, comparison, implication, and limitation before rewriting.
+### Phase 2: Editorial Map
 
-## Validation Script
+1. Identify article structure and study structure.
+2. Build the construct dictionary and study-consistency matrix.
+3. Identify global terminology decisions before local editing.
+4. Separate copyediting issues from author-decision issues.
+5. Establish a target-journal profile only when one is specified.
 
-Use `scripts/validate_docx.py` on the final DOCX:
+### Phase 3: Tracked Copyedit
 
-```powershell
-python scripts/validate_docx.py "path/to/file.docx"
-python scripts/validate_docx.py "edited.docx" --source "source.docx" --require-report --require-comment-author Catherine --fail-on-suspect
-```
+Preferred implementation order:
 
-The script reports:
+1. Microsoft Word automation with Track Changes, when available.
+2. A reliable office automation path that preserves revisions and fields.
+3. Targeted OOXML redlines using the core `docx` skill, followed by strict structural and visual validation.
 
-- visible CJK and mojibake-suspect counts in manuscript text and comments;
-- insertion/deletion/move/format-change marker counts;
-- comment authors/counts;
-- whether required comment authors, such as `Catherine`, are present when requested;
-- whether a `Copy Editing and Proofreading Report` heading is present;
-- whether `w:trackRevisions` is enabled;
-- source-vs-output warnings for missing comments, lost revisions, or newly introduced CJK/mojibake patterns.
+Edit paragraph by paragraph and table by table. Preserve local run formatting. Use verified global replacement only for low-risk, exact terminology normalization.
 
-Visible CJK count should normally be `0` for English manuscripts unless the source intentionally contains Chinese/Japanese/Korean text.
+### Phase 4: Comments and Review Report
 
-## Audit and Packaging Scripts
+Add comments for unresolved author decisions. Comments should:
 
-Use these helpers when relevant:
+- identify the exact issue;
+- explain why it matters;
+- specify the action or evidence needed;
+- avoid rewriting the manuscript in the comment.
 
-```powershell
-python scripts/audit_citations.py "manuscript.docx" --json-output "citation_audit.json" --summary-output "citation_audit.md"
-python scripts/audit_numbers.py "manuscript.docx" --json-output "numbers_audit.json" --summary-output "numbers_audit.md"
-python scripts/audit_revision_granularity.py "edited.docx" --json-output "revision_granularity_audit.json" --summary-output "revision_granularity_audit.md"
-python scripts/audit_formatting.py "edited.docx" --json-output "formatting_audit.json" --summary-output "formatting_audit.md"
-python scripts/insert_copyediting_report.py "edited.docx" --report-file "report.md" --editor-name "Catherine" --editor-initials "C"
-python scripts/create_delivery_package.py "edited.docx" --output-dir "output/doc" --clean-copy --pdf
-```
+Prepare a separate review report using `references/report-template.md`. For comprehensive tasks, the report must cover:
 
-The audit scripts are heuristic. Use their output as evidence for the copy editing report, then verify high-risk findings manually before changing manuscript content.
+- major language issues;
+- construct and terminology inconsistencies;
+- theoretical and logical weaknesses;
+- methodological and statistical inconsistencies;
+- citation and reference problems;
+- potential reviewer concerns;
+- issues requiring clarification, reanalysis, or substantive revision;
+- journal profile and style assumptions used;
+- integrity and validation summary.
+
+### Phase 5: Clean Derivative and PDF
+
+Create the clean DOCX from the tracked copy, not from the source:
+
+- accept all revisions in the clean derivative;
+- remove comments from the clean derivative unless the user requests otherwise;
+- preserve all substantive document structures and fields;
+- export the clean version to PDF.
+
+Never accept revisions or remove comments in the tracked deliverable.
+
+### Phase 6: Validation and Visual QA
+
+1. Reopen all DOCX deliverables.
+2. Run `scripts/audit_docx.py` on tracked and clean copies.
+3. Confirm source structures were retained unless intentionally changed.
+4. Confirm tracked insertion/deletion and comment counts are plausible.
+5. Confirm the clean copy contains no unresolved revision markup.
+6. Render the tracked and clean DOCX files with the core `docx` renderer.
+7. Inspect every page at normal reading scale.
+8. Check title/abstract, tables, figures, equations, references, appendices, comment locations, and edited high-density pages at higher zoom.
+9. Correct and repeat until all gates pass.
+
+## Default Deliverables
+
+For a comprehensive manuscript request, provide:
+
+1. `manuscript_tracked_changes.docx`
+2. `manuscript_clean.docx`
+3. `manuscript_clean.pdf`
+4. `copyediting_manuscript_review_report.docx`
+
+Optionally provide machine-readable audit files in a separate `audit/` folder, but do not clutter the main delivery unless requested.
+
+For limited proofreading or a user-specified output, deliver only the requested files.
+
+## Final Quality Gates
+
+Do not deliver until all applicable gates pass:
+
+- source file remains unchanged;
+- tracked edits are local and reviewable;
+- existing revisions/comments are preserved in tracked output;
+- clean output has revisions accepted and review comments removed as intended;
+- figures, tables, fields, equations, footnotes, and hyperlinks remain intact;
+- no unexpected characters, mojibake, missing glyphs, clipping, overlap, or broken page layout;
+- no unsupported factual, theoretical, methodological, or bibliographic additions;
+- all serious unresolved issues appear in comments or the report;
+- every delivered DOCX has been rendered and visually inspected page by page.
 
 ## Stop Conditions
 
-- Do not deliver a file with unexpected visible CJK, mojibake-like text, replacement characters, broken equations, missing existing comments, or missing expected tracked changes.
-- Do not deliver a tracked-copy DOCX with missing Catherine comments when Catherine comments were added or required.
-- Do not deliver a file where ordinary copyediting appears as whole-paragraph deletion plus whole-paragraph insertion.
-- Do not deliver a file whose tracked insertions visibly use a different font, size, style, or paragraph/table/reference formatting from the surrounding text.
-- Do not rely only on Word opening successfully; corruption can still appear in rendered manuscript text.
-- Do not accept/reject revisions, remove comments, update fields, rewrite references, or break citation-manager fields unless the user explicitly asks and the result is verified.
-- Do not omit the final in-document copy editing report unless the user explicitly asks for a separate report or no report.
-- Do not leave Word automation processes running after finishing.
+Stop and repair before delivery if any of the following occurs:
+
+- document corruption or missing package relationships;
+- lost fields, citations, figures, tables, equations, footnotes, comments, or revisions;
+- whole-paragraph redline blocks caused by routine language editing;
+- formatting drift in inserted text;
+- unexplained numerical changes;
+- unexpected CJK or mojibake in an English manuscript;
+- incomplete clean acceptance or residual comments in the clean deliverable;
+- inability to render and visually verify the final document.
+
+If a limitation cannot be resolved, disclose it precisely and do not describe the output as fully validated.
+
+## Bundled Audit Scripts
+
+```bash
+python scripts/audit_docx.py manuscript.docx --json audit_docx.json --markdown audit_docx.md
+python scripts/audit_citations.py manuscript.docx --json citation_audit.json --markdown citation_audit.md
+python scripts/audit_statistics.py manuscript.docx --json statistics_audit.json --markdown statistics_audit.md
+```
+
+These scripts are heuristic evidence-gathering tools. Verify each flagged issue in context before editing or commenting.
